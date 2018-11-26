@@ -18,6 +18,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import Modelo.*;
+import Util.DBManager;
+import Util.FileManager;
 import Controlador.*;
 import java.awt.BorderLayout;
 import javax.swing.JTabbedPane;

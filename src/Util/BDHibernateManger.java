@@ -1,4 +1,4 @@
-package Modelo;
+package Util;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -10,7 +10,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import Util.AccesoDatos;
+import Modelo.Dios;
+import Modelo.Mitologia;
 
 public class BDHibernateManger implements AccesoDatos {
 

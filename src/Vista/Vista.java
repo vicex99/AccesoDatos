@@ -6,6 +6,9 @@ import java.util.Map.Entry;
 
 import Modelo.*;
 import Util.AccesoDatos;
+import Util.BDHibernateManger;
+import Util.DBManager;
+import Util.FileManager;
 import Controlador.*;
 
 public class Vista {

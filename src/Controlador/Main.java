@@ -1,7 +1,7 @@
 package Controlador;
 
-import Modelo.DBManager;
-import Modelo.FileManager;
+import Util.DBManager;
+import Util.FileManager;
 import Vista.Vista;
 
 public class Main {

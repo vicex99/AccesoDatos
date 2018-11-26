@@ -1,4 +1,4 @@
-package Modelo;
+package Util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,7 +12,8 @@ import javax.swing.JOptionPane;
 
 import Controlador.Controller;
 import Controlador.ControllerMitologia;
-import Util.AccesoDatos;
+import Modelo.Dios;
+import Modelo.Mitologia;
 import Vista.Vista;
 
 public class DBManager implements AccesoDatos {

@@ -4,6 +4,8 @@ import java.util.HashMap;
 
 import Modelo.*;
 import Util.AccesoDatos;
+import Util.DBManager;
+import Util.FileManager;
 import Vista.Vista;
 
 public class Controller {

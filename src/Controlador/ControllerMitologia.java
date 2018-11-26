@@ -2,10 +2,10 @@ package Controlador;
 
 import java.util.HashMap;
 
-import Modelo.DBManager;
-import Modelo.FileManager;
 import Modelo.Mitologia;
 import Util.AccesoDatos;
+import Util.DBManager;
+import Util.FileManager;
 import Vista.Vista;
 
 public class ControllerMitologia {

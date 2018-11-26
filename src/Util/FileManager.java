@@ -1,4 +1,4 @@
-package Modelo;
+package Util;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -11,7 +11,8 @@ import java.util.Map.Entry;
 
 import Controlador.Controller;
 import Controlador.ControllerMitologia;
-import Util.AccesoDatos;
+import Modelo.Dios;
+import Modelo.Mitologia;
 import Vista.Vista;
 
 public class FileManager implements AccesoDatos {
