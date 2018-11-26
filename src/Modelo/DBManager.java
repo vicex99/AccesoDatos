@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 
 import Controlador.Controller;
 import Controlador.ControllerMitologia;
+import Util.AccesoDatos;
 import Vista.Vista;
 
 public class DBManager implements AccesoDatos {

@@ -10,6 +10,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import Util.AccesoDatos;
+
 public class BDHibernateManger implements AccesoDatos {
 
 	Session session;

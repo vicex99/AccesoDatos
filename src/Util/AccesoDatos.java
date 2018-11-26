@@ -1,9 +1,11 @@
-package Modelo;
+package Util;
 
 import java.util.HashMap;
 
 import Controlador.Controller;
 import Controlador.ControllerMitologia;
+import Modelo.Dios;
+import Modelo.Mitologia;
 import Vista.Vista;
 
 public interface AccesoDatos {
