@@ -50,6 +50,7 @@ public class FileManager implements AccesoDatos {
 			out.close();
 		} catch (Exception e) {
 			System.err.println("ERROR CONEXION");
+			e.printStackTrace();
 		}
 	}
 
@@ -110,7 +111,7 @@ public class FileManager implements AccesoDatos {
 					break;
 
 				case 3:
-					jJugador.setMitologia(cadena);
+					jJugador.setMitologia(Integer.parseInt(cadena));
 					i++;
 					break;
 
@@ -255,7 +256,7 @@ public class FileManager implements AccesoDatos {
 					break;
 
 				case 3:
-					dios.setMitologia(cadena);
+					dios.setMitologia(Integer.parseInt(cadena));
 					i++;
 					break;
 
@@ -373,7 +374,7 @@ public class FileManager implements AccesoDatos {
 					break;
 
 				case 3:
-					dios.setMitologia(cadena);
+					dios.setMitologia(Integer.parseInt(cadena));
 					i++;
 					break;
 
@@ -404,12 +405,60 @@ public class FileManager implements AccesoDatos {
 			System.err.println("ERROR 2-----> en la eliminacion del fichero:");
 			System.err.println(e.getStackTrace());
 		}
-		
+
 	}
 
 	@Override
 	public void actualizaMitologia(int id, Mitologia updateMitologia) {
-		// TODO Auto-generated method stub
-		
+		HashMap<Integer, Mitologia> Auxiliar = new HashMap<Integer, Mitologia>();
+		String cadena;
+		try {
+
+			FileReader f = new FileReader(archivoDios);
+			BufferedReader b = new BufferedReader(f);
+
+			int i = 0;
+			Mitologia mito = new Mitologia(0);
+
+			while ((cadena = b.readLine()) != null) {
+
+				switch (i) {
+				case 0:
+					mito.setId(Integer.parseInt(cadena));
+					i++;
+					break;
+
+				case 1:
+					mito.setNombre(cadena);
+					i++;
+					break;
+
+				case 2:
+					mito.setDescripcion(cadena);
+					i++;
+					break;
+
+				default:
+					if (mito.getId() != id)
+						Auxiliar.put(mito.getId(), mito);
+					else
+						Auxiliar.put(id, updateMitologia);
+
+					i = 0;
+					mito = new Mitologia(0);
+					break;
+				}
+			}
+			if (mito.getId() != id)
+				Auxiliar.put(mito.getId(), mito);
+			this.eliminarTodosDioses();
+			this.subeMitologia(Auxiliar);
+			System.out.println("************ Archivo eliminado");
+			b.close();
+
+		} catch (Exception e) {
+			System.err.println("ERROR 2-----> en la eliminacion del fichero:");
+			System.err.println(e.getStackTrace());
+		}
 	}
 }

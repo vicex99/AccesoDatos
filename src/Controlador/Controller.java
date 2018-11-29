@@ -16,10 +16,7 @@ public class Controller {
 
 	private String[] titulos = { "id", "nombre", "descripcion", "mitologia", "caracteristica 2" };
 
-	public void intercambiaDatos() {
-
-		AccesoDatos receptor = vista.getReceptor();
-		AccesoDatos emisor = vista.getEmisor();
+	public void intercambiaDatos(AccesoDatos receptor, AccesoDatos emisor) {
 
 		HashMap<Integer, Dios> lista;
 
@@ -28,28 +25,24 @@ public class Controller {
 	}
 
 	// sacar por pantalla Dios
-	public void imprimir() {
-		AccesoDatos acceso = vista.getEmisor();
+	public void imprimir(AccesoDatos acceso, Vista vista) {
 		HashMap<Integer, Dios> impresion = acceso.leeDios();
 
 		vista.imprimirDios(impresion);
 	}
 
 	// añadir dios
-	public void subir() {
-		AccesoDatos acceso = vista.getEmisor();
+	public void subir(AccesoDatos acceso, Vista vista) {
 		acceso.subeDios(vista.cogerDatosDios(this.getTitulos()));
 	}
 
 	// eliminar una fila de dioses
-	public void eliminar(int id) {
-		AccesoDatos acceso = vista.getEmisor();
+	public void eliminar(int id, AccesoDatos acceso, Vista vista) {
 		acceso.eliminarDios(id);
 	}
 
 	// eliminar tabla dioses
-	public void eliminarTodos() {
-		AccesoDatos acceso = vista.getEmisor();
+	public void eliminarTodos(AccesoDatos acceso) {
 		acceso.eliminarTodosDioses();
 	}
 
@@ -60,18 +53,5 @@ public class Controller {
 
 	public void setTitulos(String[] titulos) {
 		this.titulos = titulos;
-	}
-
-	// Conexiones MVC
-	public void setBBDD(DBManager bbdd) {
-		this.bbdd = bbdd;
-	}
-
-	public void setFichero(FileManager fichero) {
-		this.fichero = fichero;
-	}
-
-	public void setVista(Vista vista) {
-		this.vista = vista;
 	}
 }

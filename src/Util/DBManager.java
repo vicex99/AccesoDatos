@@ -59,7 +59,7 @@ public class DBManager implements AccesoDatos {
 				preparedStmt.setInt(1, entry.getKey());
 				preparedStmt.setString(2, entry.getValue().getNombre());
 				preparedStmt.setString(3, entry.getValue().getDefinicion());
-				preparedStmt.setString(4, entry.getValue().getMitologia());
+				preparedStmt.setInt(4, entry.getValue().getMitologia());
 				preparedStmt.setString(5, entry.getValue().getCaract());
 				preparedStmt.executeUpdate();
 				System.out.println(" **********  ENVIO COMPLETADO");
@@ -127,7 +127,22 @@ public class DBManager implements AccesoDatos {
 	@Override
 	public HashMap<Integer, Dios> leeDios() {
 		HashMap<Integer, Dios> Auxiliar = new HashMap<Integer, Dios>();
-		
+		try {
+			preparedStmt = conexion.prepareStatement(queryVerMitologias);
+			ResultSet rs = preparedStmt.executeQuery();
+
+			while (rs.next()) {
+				Dios nuevo = new Dios(rs.getInt("id"), rs.getString("Nombre"), rs.getString("Descripcion"), rs.getInt("idMitologia"), rs.getString("Caracteristica") );
+
+				Auxiliar.put(rs.getInt("id"), nuevo);
+			}
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			System.err.println("ERROR - base de datos MySQL no encontrada");
+			conexion = conn.Conectar();
+		}
 		return Auxiliar;
 	}
 
@@ -136,7 +151,7 @@ public class DBManager implements AccesoDatos {
 		HashMap<Integer, Mitologia> Auxiliar = new HashMap<Integer, Mitologia>();
 
 		try {
-			preparedStmt = conexion.prepareStatement(queryVerMitologias);
+			preparedStmt = conexion.prepareStatement(queryVerDioses);
 			ResultSet rs = preparedStmt.executeQuery();
 
 			while (rs.next()) {
@@ -236,7 +251,7 @@ public class DBManager implements AccesoDatos {
 			preparedStmt.setInt(1, updateDios.getId());
 			preparedStmt.setString(2, updateDios.getNombre());
 			preparedStmt.setString(3, updateDios.getDefinicion());
-			preparedStmt.setString(4, updateDios.getMitologia());
+			preparedStmt.setInt(4, updateDios.getMitologia());
 			preparedStmt.setString(5, updateDios.getCaract());
 
 			preparedStmt.executeUpdate();
@@ -288,7 +303,7 @@ class ConexionMySQL {
 		Connection link = null;
 
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
+			Class.forName("com.mysql.jdbc.Driver");
 			link = DriverManager.getConnection(this.url, this.user, this.pass);
 			System.out.println(" ********************  base de datos conectada");
 

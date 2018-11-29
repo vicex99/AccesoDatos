@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="Modelo.Dios" table="dioses">
+		<id name="id" type="int">
+			<column name="id" />
+			<generator class="increment" />
+		</id>
+
+		<property name="nombre" type="string">
+			<column name="Nombre" length="24" not-null="true" />
+		</property>
+
+		<property name="definicion" type="string">
+			<column name="Descripcion" length="455" not-null="true" />
+		</property>
+
+		<property name="mitologia" type="string">
+			<column name="idMitologia" length="30" not-null="true" />
+		</property>
+
+		<property name="caract" type="string">
+			<column name="Caracteristica" length="455" not-null="true" />
+		</property>
+	</class>
+</hibernate-mapping>

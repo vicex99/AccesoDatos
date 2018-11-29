@@ -16,10 +16,7 @@ public class ControllerMitologia {
 
 	private String[] titulos = { "id", "nombre", "descripcion", "caracteristica 1", "caracteristica 2" };
 
-	public void intercambiaDatos() {
-
-		AccesoDatos receptor = vista.getReceptor();
-		AccesoDatos emisor = vista.getEmisor();
+	public void intercambiaDatos(AccesoDatos emisor, AccesoDatos receptor) {
 
 		HashMap<Integer, Mitologia> lista;
 
@@ -28,28 +25,24 @@ public class ControllerMitologia {
 	}
 
 	// Sacar por pantalla Mitologia
-	public void imprimir() {
-		AccesoDatos acceso = vista.getEmisor();
+	public void imprimir(AccesoDatos acceso, Vista vista) {
 		HashMap<Integer, Mitologia> impresion = acceso.leeMitologia();
 
 		vista.imprimirMitologia(impresion);
 	}
 
 	// Añadir Mitologia
-	public void subir() {
-		AccesoDatos acceso = vista.getEmisor();
+	public void subir(AccesoDatos acceso, Vista vista) {
 		acceso.subeMitologia(vista.cogerDatosMitologia(this.getTitulos()));
 	}
 
 	// Eliminar una mitologia
-	public void eliminarTodas() {
-		AccesoDatos acceso = vista.getEmisor();
+	public void eliminarTodas(AccesoDatos acceso) {
 		acceso.eliminarTodasMitologias();
 	}
 
 	// Eliminar mitologias
-	public void eliminar(int id) {
-		AccesoDatos acceso = vista.getEmisor();
+	public void eliminar(int id, AccesoDatos acceso) {
 		acceso.eliminarMitologia(id);
 	}
 

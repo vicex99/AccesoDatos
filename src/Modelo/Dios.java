@@ -5,20 +5,20 @@ public class Dios {
 	private int id;
 	private String nombre;
 	private String definicion;
-	private String mitologia;
+	private int mitologia;
 	private String caract;
 
-	public Dios(int id, String nombre, String definicion, String mitologia, String caract) {
+	public Dios(int id, String nombre, String definicion, int i, String caract) {
 		
 		this.id = id;
 		this.nombre = nombre;
 		this.definicion = definicion;
-		this.mitologia = mitologia;
+		this.mitologia = i;
 		this.caract = caract;
 	}
 	
 	public Dios(int num) {
-		this(0, null, null, null, null);
+		this(0, null, null, 0, null);
 	}
 	
 	public Dios() {
@@ -49,11 +49,11 @@ public class Dios {
 		this.definicion = definicion;
 	}
 
-	public String getMitologia() {
+	public int getMitologia() {
 		return mitologia;
 	}
 	
-	public void setMitologia(String mitologia) {
+	public void setMitologia(int mitologia) {
 		this.mitologia = mitologia;
 	}
 

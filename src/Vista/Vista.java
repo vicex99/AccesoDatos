@@ -9,6 +9,7 @@ import Util.AccesoDatos;
 import Util.BDHibernateManger;
 import Util.DBManager;
 import Util.FileManager;
+import Util.WebManager;
 import Controlador.*;
 
 public class Vista {
@@ -34,8 +35,13 @@ public class Vista {
 			+ "\n7 - Eliminar Mitologias " + "\n8 - Eliminar un dios " + "\n9 - Eliminar una mitologia "
 			+ "\n0 - terminar programa" + "para cambiar de eleccion otra tecla cualquier boton" + "\n *******";
 
-	String tiposAccesos = "\n *******" + "\n1  - Ficheros" + "\n2  - Base de datos" + "\n3  - Hibernate" + "\n *******";
+	String tiposAccesos = "\n *******" + "\n1  - Ficheros" + "\n2  - Base de datos" + "\n3  - Hibernate" + "\n4  - web" + "\n *******";
 
+	public Vista() {
+		myControlDios = new Controller();
+		myControlMito = new ControllerMitologia();
+	}
+	
 	/*
 	 * Inicializa la vista en consola con el menu No termina hasta que se le da al 0
 	 * 
@@ -47,57 +53,30 @@ public class Vista {
 		int eleccion = -1;
 
 		do {
-			System.out.println(tiposAccesos);
-			try {
-				switch (sc.nextInt()) {
-				case 1:
-					emisor = new DBManager();
-					System.out.println(menu);
-					eleccion = sc.nextInt();
-					break;
-				case 2:
-					emisor = new FileManager();
-					System.out.println(menu);
-					eleccion = sc.nextInt();
-					break;
-				case 3:
-					emisor = new BDHibernateManger();
-					System.out.println(menu);
-					eleccion = sc.nextInt();
-					break;
-				default:
-					System.err.println("ERROR al introducir los datos que no tienen valor, inserte los indicados");
-					break;
-				}
-			} catch (Exception e) {
-				System.err.println("ERROR al introducir los datos en formato erroneo, cerrando programa");
-				eleccion = 0;
-			}
+			emisor = newAcceso();
 
-			switch (eleccion) {
+			System.out.println(menu);
+			
+			switch (sc.nextInt()) {
 			case 0:
 				System.out.println("\nTERMINANDO PROGRAMA");
 				fin = true;
 				break;
 			// leer dioses
 			case 1:
-				this.setEmisor(emisor);
-				myControlDios.imprimir();
+				myControlDios.imprimir(emisor, this);
 				break;
 			// Leer mitologia
 			case 2:
-				this.setEmisor(emisor);
-				myControlMito.imprimir();
+				myControlMito.imprimir(emisor, this);
 				break;
 			// subir dios
 			case 3:
-				this.setEmisor(emisor);
-				myControlDios.subir();
+				myControlDios.subir(emisor, this);
 				break;
 			// subir mitologia
 			case 4:
-				this.setEmisor(emisor);
-				myControlMito.subir();
+				myControlMito.subir(emisor, this);
 				break;
 			// pasar de uno a otro
 			case 5:
@@ -106,27 +85,23 @@ public class Vista {
 				if (this.getReceptor() == null) {
 					break;
 				}
-				myControlDios.intercambiaDatos();
+				myControlDios.intercambiaDatos(receptor, newAcceso());
 				break;
 			// Eliminar dioses
 			case 6:
-				this.setEmisor(emisor);
-				myControlDios.eliminarTodos();
+				myControlDios.eliminarTodos(emisor);
 				break;
 			// Eliminar Mitologias
 			case 7:
-				this.setEmisor(emisor);
-				myControlMito.eliminarTodas();
+				myControlMito.eliminarTodas(emisor);
 				break;
 			// Eliminar un dios
 			case 8:
-				this.setEmisor(emisor);
-				myControlDios.eliminar(this.selectorId());
+				myControlDios.eliminar(this.selectorId(), emisor, this);
 				break;
 			// Eliminar una mitologia
 			case 9:
-				this.setEmisor(emisor);
-				myControlMito.eliminar(this.selectorId());
+				myControlMito.eliminar(this.selectorId(), emisor);
 				break;
 			default:
 				System.out.println("opcion no encontrada, elige entre las disponibles");
@@ -157,11 +132,12 @@ public class Vista {
 				newDios.setDefinicion(sc.nextLine());
 				break;
 			case 3:
-				newDios.setMitologia(sc.nextLine());
+				newDios.setMitologia(Integer.parseInt(sc.nextLine()));
 				break;
 			case 4:
 				newDios.setCaract(sc.nextLine());
 				break;
+				
 			}
 		}
 
@@ -240,13 +216,16 @@ public class Vista {
 
 		switch (sc.nextInt()) {
 		case 1:
-			eleccion = new DBManager();
+			eleccion = new FileManager();
 			break;
 		case 2:
-			eleccion = new FileManager();
+			eleccion = new DBManager();
 			break;
 		case 3:
-			eleccion = new FileManager();
+			eleccion = new BDHibernateManger();
+			break;
+		case 4:
+			eleccion = new WebManager();
 			break;
 		default:
 			System.out.println("Ninguna seleccionada terminando enlace");
@@ -272,14 +251,5 @@ public class Vista {
 	private void setEmisor(AccesoDatos datos) {
 		this.emisor = datos;
 
-	}
-
-	// Presentaciones entre MVC
-	public void setController(Controller contr) {
-		this.myControlDios = contr;
-	}
-
-	public void setController(ControllerMitologia contr) {
-		this.myControlMito = contr;
 	}
 }
