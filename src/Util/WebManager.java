@@ -295,8 +295,9 @@ public class WebManager implements AccesoDatos {
 			String response = encargadoPeticiones.getRequest(url);
 
 			// Para ver el string tal cual lo manda el php
+			System.out.println("traza prueba respuesta");
 			System.out.println(response); // Traza para pruebas
-
+			System.out.println("traza prueba respuesta");
 			// Para parar el programa y sacar solo el JSON
 //			 System.exit(0);
 
@@ -380,8 +381,78 @@ public class WebManager implements AccesoDatos {
 			// Lo transformamos a string y llamamos al
 			// encargado de peticiones para que lo envie al PHP
 
-			objPeticion.put("peticion", "add");
+			objPeticion.put("peticion", "update");
 			objPeticion.put("DeusUpdate", objDeus);
+
+			String json = objPeticion.toJSONString();
+
+			System.out.println("Lanzamos peticion JSON para actualizar un dios");
+
+			String url = SERVER_PATH + UPDATE_DEUS;
+
+			System.out.println("La url a la que lanzamos la petición es " + url);
+			System.out.println("El json que enviamos es: ");
+			System.out.println(json);
+			// System.exit(-1);
+
+			String response = encargadoPeticiones.postRequest(url, json);
+
+			System.out.println("El json que recibimos es: ");
+
+//			System.out.println(response); // Traza para pruebas
+			System.exit(-1);
+
+			// Parseamos la respuesta y la convertimos en un JSONObject
+
+			JSONObject respuesta = (JSONObject) JSONValue.parse(response.toString());
+
+			if (respuesta == null) { // Si hay algún error de parseo (json
+										// incorrecto porque hay algún caracter
+										// raro, etc.) la respuesta será null
+				System.out.println("El json recibido no es correcto. Finaliza la ejecución");
+				System.exit(-1);
+			} else { // El JSON recibido es correcto
+
+				// Sera "ok" si todo ha ido bien o "error" si hay algún problema
+				String estado = (String) respuesta.get("estado");
+				if (estado.equals("ok")) {
+					System.out.println("Actualizacion dios enviado por JSON Remoto");
+
+				} else { // Hemos recibido el json pero en el estado se nos
+							// indica que ha habido algún error
+
+					System.out.println("Acceso JSON REMOTO - Error al actualizar los datos");
+					System.out.println("Error: " + (String) respuesta.get("error"));
+					System.out.println("Consulta: " + (String) respuesta.get("query"));
+
+					System.exit(-1);
+				}
+			}
+		} catch (Exception e) {
+			System.out.println(
+					"Excepcion desconocida. Traza de error comentada en el método 'DeusUpdate' de la clase JSON REMOTO");
+			// e.printStackTrace();
+			System.out.println("Fin ejecución");
+			System.exit(-1);
+		}
+	}
+
+	@Override
+	public void actualizaMitologia(Mitologia updateMitologia) {
+		try {
+			JSONObject objMito = new JSONObject();
+			JSONObject objPeticion = new JSONObject();
+
+			objMito.put("id", updateMitologia.getId());
+			objMito.put("nombre", updateMitologia.getNombre());
+			objMito.put("descripcion", updateMitologia.getDescripcion());
+
+			// Tenemos el jugador como objeto JSON. Lo añadimos a una peticion
+			// Lo transformamos a string y llamamos al
+			// encargado de peticiones para que lo envie al PHP
+
+			objPeticion.put("peticion", "update");
+			objPeticion.put("MitoUpdate", objMito);
 
 			String json = objPeticion.toJSONString();
 
@@ -415,8 +486,7 @@ public class WebManager implements AccesoDatos {
 				// Sera "ok" si todo ha ido bien o "error" si hay algún problema
 				String estado = (String) respuesta.get("estado");
 				if (estado.equals("ok")) {
-
-					System.out.println("Actualizacion jugador enviado por JSON Remoto");
+					System.out.println("Actualizacion dios enviado por JSON Remoto");
 
 				} else { // Hemos recibido el json pero en el estado se nos
 							// indica que ha habido algún error
@@ -426,12 +496,11 @@ public class WebManager implements AccesoDatos {
 					System.out.println("Consulta: " + (String) respuesta.get("query"));
 
 					System.exit(-1);
-
 				}
 			}
 		} catch (Exception e) {
 			System.out.println(
-					"Excepcion desconocida. Traza de error comentada en el método 'DeusUpdate' de la clase JSON REMOTO");
+					"Excepcion desconocida. Traza de error comentada en el método 'MitologyUpdate' de la clase JSON REMOTO");
 			// e.printStackTrace();
 			System.out.println("Fin ejecución");
 			System.exit(-1);
@@ -439,13 +508,68 @@ public class WebManager implements AccesoDatos {
 	}
 
 	@Override
-	public void actualizaMitologia(Mitologia updateMitologia) {
-
-	}
-
-	@Override
 	public void eliminarDios(int id) {
+		try {
+			JSONObject objPeticion = new JSONObject();
 
+			// Tenemos el jugador como objeto JSON. Lo añadimos a una peticion
+			// Lo transformamos a string y llamamos al
+			// encargado de peticiones para que lo envie al PHP
+
+			objPeticion.put("peticion", "delete");
+			objPeticion.put("DeusDelete", id);
+
+			String json = objPeticion.toJSONString();
+
+			System.out.println("Lanzamos peticion JSON para actualizar una mitologia");
+
+			String url = SERVER_PATH + DELETE_DEUS;
+
+			System.out.println("La url a la que lanzamos la petición es " + url);
+			System.out.println("El json que enviamos es: ");
+			System.out.println(json);
+			// System.exit(-1);
+
+			String response = encargadoPeticiones.postRequest(url, json);
+
+			System.out.println("El json que recibimos es: ");
+
+			System.out.println(response); // Traza para pruebas
+//			System.exit(-1);
+
+			// Parseamos la respuesta y la convertimos en un JSONObject
+
+			JSONObject respuesta = (JSONObject) JSONValue.parse(response.toString());
+
+			if (respuesta == null) { // Si hay algún error de parseo (json
+										// incorrecto porque hay algún caracter
+										// raro, etc.) la respuesta será null
+				System.out.println("El json recibido no es correcto. Finaliza la ejecución");
+				System.exit(-1);
+			} else { // El JSON recibido es correcto
+
+				// Sera "ok" si todo ha ido bien o "error" si hay algún problema
+				String estado = (String) respuesta.get("estado");
+				if (estado.equals("ok")) {
+					System.out.println("Borrado dios enviado por JSON Remoto");
+
+				} else { // Hemos recibido el json pero en el estado se nos
+							// indica que ha habido algún error
+
+					System.out.println("Acceso JSON REMOTO - Error al borrar los datos");
+					System.out.println("Error: " + (String) respuesta.get("error"));
+					System.out.println("Consulta: " + (String) respuesta.get("query"));
+
+					System.exit(-1);
+				}
+			}
+		} catch (Exception e) {
+			System.out.println(
+					"Excepcion desconocida. Traza de error comentada en el método 'MitologyUpdate' de la clase JSON REMOTO");
+			// e.printStackTrace();
+			System.out.println("Fin ejecución");
+			System.exit(-1);
+		}
 	}
 
 	@Override
