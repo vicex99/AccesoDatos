@@ -35,6 +35,14 @@ public class Controller {
 	public void subir(AccesoDatos acceso, Vista vista) {
 		acceso.subeDios(vista.cogerDatosDios(this.getTitulos()));
 	}
+	
+	// Modificar dios
+	public void updateDios(AccesoDatos acceso, Vista vista) {
+		
+		acceso.actualizaDios(vista.cogerDatoUnicoDios(this.getTitulos()));
+	}
+	
+	// Modificar mitlogia
 
 	// eliminar una fila de dioses
 	public void eliminar(int id, AccesoDatos acceso, Vista vista) {

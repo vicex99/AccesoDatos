@@ -344,7 +344,7 @@ public class FileManager implements AccesoDatos {
 	}
 
 	@Override
-	public void actualizaDios(int id, Dios updateDios) {
+	public void actualizaDios(Dios updateDios) {
 		HashMap<Integer, Dios> Auxiliar = new HashMap<Integer, Dios>();
 		String cadena;
 		try {
@@ -384,17 +384,17 @@ public class FileManager implements AccesoDatos {
 					break;
 
 				default:
-					if (dios.getId() != id)
+					if (dios.getId() != updateDios.getId())
 						Auxiliar.put(dios.getId(), dios);
 					else
-						Auxiliar.put(id, updateDios);
+						Auxiliar.put(updateDios.getId(), updateDios);
 
 					i = 0;
 					dios = new Dios(0);
 					break;
 				}
 			}
-			if (dios.getId() != id)
+			if (dios.getId() != updateDios.getId())
 				Auxiliar.put(dios.getId(), dios);
 			this.eliminarTodosDioses();
 			this.subeDios(Auxiliar);
@@ -409,12 +409,12 @@ public class FileManager implements AccesoDatos {
 	}
 
 	@Override
-	public void actualizaMitologia(int id, Mitologia updateMitologia) {
+	public void actualizaMitologia(Mitologia updateMitologia) {
 		HashMap<Integer, Mitologia> Auxiliar = new HashMap<Integer, Mitologia>();
 		String cadena;
 		try {
 
-			FileReader f = new FileReader(archivoDios);
+			FileReader f = new FileReader(archivoMito);
 			BufferedReader b = new BufferedReader(f);
 
 			int i = 0;
@@ -439,17 +439,17 @@ public class FileManager implements AccesoDatos {
 					break;
 
 				default:
-					if (mito.getId() != id)
+					if (mito.getId() != updateMitologia.getId())
 						Auxiliar.put(mito.getId(), mito);
 					else
-						Auxiliar.put(id, updateMitologia);
+						Auxiliar.put(updateMitologia.getId(), updateMitologia);
 
 					i = 0;
 					mito = new Mitologia(0);
 					break;
 				}
 			}
-			if (mito.getId() != id)
+			if (mito.getId() != updateMitologia.getId())
 				Auxiliar.put(mito.getId(), mito);
 			this.eliminarTodosDioses();
 			this.subeMitologia(Auxiliar);

@@ -365,7 +365,7 @@ public class WebManager implements AccesoDatos {
 	}
 
 	@Override
-	public void actualizaDios(int id, Dios updateDios) {
+	public void actualizaDios(Dios updateDios) {
 		try {
 			JSONObject objDeus = new JSONObject();
 			JSONObject objPeticion = new JSONObject();
@@ -381,11 +381,11 @@ public class WebManager implements AccesoDatos {
 			// encargado de peticiones para que lo envie al PHP
 
 			objPeticion.put("peticion", "add");
-			objPeticion.put("mithologyUpdate", objDeus);
+			objPeticion.put("DeusUpdate", objDeus);
 
 			String json = objPeticion.toJSONString();
 
-			System.out.println("Lanzamos peticion JSON para almacenar una mitologia");
+			System.out.println("Lanzamos peticion JSON para actualizar una mitologia");
 
 			String url = SERVER_PATH + UPDATE_DEUS;
 
@@ -399,7 +399,7 @@ public class WebManager implements AccesoDatos {
 			System.out.println("El json que recibimos es: ");
 
 //			System.out.println(response); // Traza para pruebas
-//			System.exit(-1);
+			System.exit(-1);
 
 			// Parseamos la respuesta y la convertimos en un JSONObject
 
@@ -416,12 +416,12 @@ public class WebManager implements AccesoDatos {
 				String estado = (String) respuesta.get("estado");
 				if (estado.equals("ok")) {
 
-					System.out.println("Almacenado jugador enviado por JSON Remoto");
+					System.out.println("Actualizacion jugador enviado por JSON Remoto");
 
 				} else { // Hemos recibido el json pero en el estado se nos
 							// indica que ha habido algún error
 
-					System.out.println("Acceso JSON REMOTO - Error al almacenar los datos");
+					System.out.println("Acceso JSON REMOTO - Error al actualizar los datos");
 					System.out.println("Error: " + (String) respuesta.get("error"));
 					System.out.println("Consulta: " + (String) respuesta.get("query"));
 
@@ -431,7 +431,7 @@ public class WebManager implements AccesoDatos {
 			}
 		} catch (Exception e) {
 			System.out.println(
-					"Excepcion desconocida. Traza de error comentada en el método 'annadirMitologia' de la clase JSON REMOTO");
+					"Excepcion desconocida. Traza de error comentada en el método 'DeusUpdate' de la clase JSON REMOTO");
 			// e.printStackTrace();
 			System.out.println("Fin ejecución");
 			System.exit(-1);
@@ -439,7 +439,7 @@ public class WebManager implements AccesoDatos {
 	}
 
 	@Override
-	public void actualizaMitologia(int id, Mitologia updateMitologia) {
+	public void actualizaMitologia(Mitologia updateMitologia) {
 
 	}
 

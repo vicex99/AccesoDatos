@@ -118,14 +118,14 @@ public class BDHibernateManger implements AccesoDatos {
 	}
 
 	@Override
-	public void actualizaDios(int id, Dios updateDios) {
+	public void actualizaDios(Dios updateDios) {
 		session.beginTransaction();
 		session.update(updateDios);
 		session.getTransaction().commit();
 	}
 
 	@Override
-	public void actualizaMitologia(int id, Mitologia updateMitologia) {
+	public void actualizaMitologia(Mitologia updateMitologia) {
 		session.beginTransaction();
 		session.update(updateMitologia);
 		session.getTransaction().commit();

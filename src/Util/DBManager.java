@@ -245,7 +245,7 @@ public class DBManager implements AccesoDatos {
 	}
 
 	@Override
-	public void actualizaDios(int id, Dios updateDios) {
+	public void actualizaDios(Dios updateDios) {
 		try {
 			preparedStmt = conexion.prepareStatement(queryModificarDios);
 			preparedStmt.setInt(1, updateDios.getId());
@@ -269,7 +269,7 @@ public class DBManager implements AccesoDatos {
 	}
 
 	@Override
-	public void actualizaMitologia(int id, Mitologia updateMitologia) {
+	public void actualizaMitologia( Mitologia updateMitologia) {
 		try {
 			preparedStmt = conexion.prepareStatement(queryModificarMito);
 			preparedStmt.setInt(1, updateMitologia.getId());

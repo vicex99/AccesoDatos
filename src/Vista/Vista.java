@@ -103,6 +103,14 @@ public class Vista {
 			case 9:
 				myControlMito.eliminar(this.selectorId(), emisor);
 				break;
+			//actualiza un dios
+			case 10:
+//				myControlDios.
+				break;
+			// actualiza una mitologia
+			case 11:
+				
+				break;
 			default:
 				System.out.println("opcion no encontrada, elige entre las disponibles");
 				break;
@@ -144,6 +152,38 @@ public class Vista {
 		datos.put(id, newDios);
 		return datos;
 	}
+	
+	// Pedir datos de Dioses
+		public Dios cogerDatoUnicoDios(String[] titulos) {
+
+			Dios newDios = new Dios(0);
+			int id = 0;
+
+			for (int i = 0; i < titulos.length; i++) {
+				System.out.print(titulos[i] + ": ");
+				switch (i) {
+				case 0:
+					id = sc.nextInt();
+					break;
+				case 1:
+					sc.nextLine();
+					newDios.setNombre(sc.nextLine());
+					break;
+				case 2:
+					newDios.setDefinicion(sc.nextLine());
+					break;
+				case 3:
+					newDios.setMitologia(Integer.parseInt(sc.nextLine()));
+					break;
+				case 4:
+					newDios.setCaract(sc.nextLine());
+					break;
+					
+				}
+			}
+
+			return newDios;
+		}
 
 	// Pedir datos de Mitologias
 	public HashMap<Integer, Mitologia> cogerDatosMitologia(String[] titulos) {

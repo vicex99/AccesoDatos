@@ -16,8 +16,8 @@ public interface AccesoDatos {
 	public void subeMitologia(HashMap<Integer, Mitologia> lista);   
 	public HashMap<Integer, Mitologia> leeMitologia();
 	
-	public void actualizaDios(int id, Dios updateDios);
-	public void actualizaMitologia(int id, Mitologia updateMitologia);
+	public void actualizaDios(Dios updateDios);
+	public void actualizaMitologia(Mitologia updateMitologia);
 	
 	public void eliminarDios(int id);
 	public void eliminarTodosDioses();
