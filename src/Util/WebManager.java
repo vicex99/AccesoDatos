@@ -30,7 +30,7 @@ public class WebManager implements AccesoDatos {
 		GET_MITHOLOGY = "leeMitologias.php";
 		SET_MITHOLOGY = "escribirMitologia.php";
 		UPDATE_MITOLOGY = "actualizarMitologia.php";
-		DELETE_MITOLOGY = "borrarMitologia.php";
+		DELETE_MITOLOGY = "borarMitologia.php";
 
 	}
 
@@ -289,15 +289,13 @@ public class WebManager implements AccesoDatos {
 
 			String url = SERVER_PATH + GET_MITHOLOGY; // Sacadas de configuracion
 
-//			 System.out.println("La url a la que lanzamos la petición es " +
-//			 url); // Traza para pruebas
+			 System.out.println("La url a la que lanzamos la petición es " +
+			 url); // Traza para pruebas
 
 			String response = encargadoPeticiones.getRequest(url);
 
 			// Para ver el string tal cual lo manda el php
-			System.out.println("traza prueba respuesta");
 			System.out.println(response); // Traza para pruebas
-			System.out.println("traza prueba respuesta");
 			// Para parar el programa y sacar solo el JSON
 //			 System.exit(0);
 
@@ -458,19 +456,19 @@ public class WebManager implements AccesoDatos {
 
 			System.out.println("Lanzamos peticion JSON para actualizar una mitologia");
 
-			String url = SERVER_PATH + UPDATE_DEUS;
+			String url = SERVER_PATH + UPDATE_MITOLOGY;
 
-			System.out.println("La url a la que lanzamos la petición es " + url);
-			System.out.println("El json que enviamos es: ");
-			System.out.println(json);
+//			System.out.println("La url a la que lanzamos la petición es " + url);
+//			System.out.println("El json que enviamos es: ");
+//			System.out.println(json);
 			// System.exit(-1);
 
 			String response = encargadoPeticiones.postRequest(url, json);
 
-			System.out.println("El json que recibimos es: ");
+//			System.out.println("El json que recibimos es: ");
 
 //			System.out.println(response); // Traza para pruebas
-			System.exit(-1);
+//			System.exit(-1);
 
 			// Parseamos la respuesta y la convertimos en un JSONObject
 
@@ -521,13 +519,13 @@ public class WebManager implements AccesoDatos {
 
 			String json = objPeticion.toJSONString();
 
-			System.out.println("Lanzamos peticion JSON para actualizar una mitologia");
+			System.out.println("Lanzamos peticion JSON para borrar un dios");
 
 			String url = SERVER_PATH + DELETE_DEUS;
 
-			System.out.println("La url a la que lanzamos la petición es " + url);
-			System.out.println("El json que enviamos es: ");
-			System.out.println(json);
+//			System.out.println("La url a la que lanzamos la petición es " + url);
+//			System.out.println("El json que enviamos es: ");
+//			System.out.println(json);
 			// System.exit(-1);
 
 			String response = encargadoPeticiones.postRequest(url, json);
@@ -565,7 +563,7 @@ public class WebManager implements AccesoDatos {
 			}
 		} catch (Exception e) {
 			System.out.println(
-					"Excepcion desconocida. Traza de error comentada en el método 'MitologyUpdate' de la clase JSON REMOTO");
+					"Excepcion desconocida. Traza de error comentada en el método 'DeusDelete' de la clase JSON REMOTO");
 			// e.printStackTrace();
 			System.out.println("Fin ejecución");
 			System.exit(-1);
@@ -579,7 +577,67 @@ public class WebManager implements AccesoDatos {
 
 	@Override
 	public void eliminarMitologia(int id) {
+		try {
+			JSONObject objPeticion = new JSONObject();
 
+			// Tenemos el jugador como objeto JSON. Lo añadimos a una peticion
+			// Lo transformamos a string y llamamos al
+			// encargado de peticiones para que lo envie al PHP
+
+			objPeticion.put("peticion", "delete");
+			objPeticion.put("MitoDelete", id);
+
+			String json = objPeticion.toJSONString();
+
+			System.out.println("Lanzamos peticion JSON para borrar un dios");
+
+			String url = SERVER_PATH + DELETE_MITOLOGY;
+
+//			System.out.println("La url a la que lanzamos la petición es " + url);
+//			System.out.println("El json que enviamos es: ");
+//			System.out.println(json);
+			// System.exit(-1);
+
+			String response = encargadoPeticiones.postRequest(url, json);
+
+			System.out.println("El json que recibimos es: ");
+
+			System.out.println(response); // Traza para pruebas
+//			System.exit(-1);
+
+			// Parseamos la respuesta y la convertimos en un JSONObject
+
+			JSONObject respuesta = (JSONObject) JSONValue.parse(response.toString());
+
+			if (respuesta == null) { // Si hay algún error de parseo (json
+										// incorrecto porque hay algún caracter
+										// raro, etc.) la respuesta será null
+				System.out.println("El json recibido no es correcto. Finaliza la ejecución");
+				System.exit(-1);
+			} else { // El JSON recibido es correcto
+
+				// Sera "ok" si todo ha ido bien o "error" si hay algún problema
+				String estado = (String) respuesta.get("estado");
+				if (estado.equals("ok")) {
+					System.out.println("Borrado mitologia enviado por JSON Remoto");
+
+				} else { // Hemos recibido el json pero en el estado se nos
+							// indica que ha habido algún error
+
+					System.out.println("Acceso JSON REMOTO - Error al borrar los datos");
+					System.out.println("Error: " + (String) respuesta.get("error"));
+					System.out.println("Consulta: " + (String) respuesta.get("query"));
+
+					System.exit(-1);
+				}
+			}
+		} catch (Exception e) {
+			System.out.println(
+					"Excepcion desconocida. Traza de error comentada en el método 'MitoDelete' de la clase JSON REMOTO");
+			// e.printStackTrace();
+			System.out.println("Fin ejecución");
+			System.exit(-1);
+		}
 	}
 
 	@Override
